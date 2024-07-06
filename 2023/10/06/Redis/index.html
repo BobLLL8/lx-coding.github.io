@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="LiuXue">
+
+
+    <meta name="subtitle" content="分享我的旅程">
+
+
+    <meta name="description" content="欢迎来到 Liuxue 的个人博客，我将在这里分享我的想法、经历和旅程。">
+
+
+    <meta name="keywords" content="Liuxue,个人博客,旅程,经历">
+
+
+<title>Redis | Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">LiuXue&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">LiuXue&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Redis</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">LiuXue</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 6, 2023&nbsp;&nbsp;0:00:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Redis/">Redis</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="1-Redis基础"><a href="#1-Redis基础" class="headerlink" title="1. Redis基础"></a>1. Redis基础</h2><h3 id="1-1-定义与用途"><a href="#1-1-定义与用途" class="headerlink" title="1.1 定义与用途"></a>1.1 定义与用途</h3><ul>
+<li><strong>Redis</strong>：Remote Dictionary Server（远程字典服务），是一个开源的、使用ANSI C编写的、支持网络、基于内存亦可持久化的Key-Value数据库。</li>
+<li><strong>用途</strong>：主要用于缓存、分布式锁、事务、持久化、LUA脚本等。</li>
+</ul>
+<h3 id="1-2-性能优势"><a href="#1-2-性能优势" class="headerlink" title="1.2 性能优势"></a>1.2 性能优势</h3><ul>
+<li><strong>内存存储</strong>：数据存储在内存中，读写速度极快。</li>
+<li><strong>高效数据结构</strong>：如SDS（简单动态字符串）、字典（哈希表）、跳跃表等。</li>
+<li><strong>单线程模型</strong>：避免CPU上下文切换和锁竞争，Redis 6.0后引入多线程提升IO性能。</li>
+<li><strong>I&#x2F;O多路复用</strong>：使用epoll技术，单个线程高效处理多个连接请求。</li>
+</ul>
+<h2 id="2-数据结构"><a href="#2-数据结构" class="headerlink" title="2. 数据结构"></a>2. 数据结构</h2><h3 id="2-1-基本类型"><a href="#2-1-基本类型" class="headerlink" title="2.1 基本类型"></a>2.1 基本类型</h3><ul>
+<li><strong>String</strong>：二进制安全，用于存储图片或序列化对象。</li>
+<li><strong>Hash</strong>：键值对集合，适合存储对象信息。</li>
+<li><strong>List</strong>：有序字符串集合，实现栈、队列、有限集合、消息队列等。</li>
+<li><strong>Set</strong>：不允许重复元素的字符串集合，用于用户标签、随机数抽奖等。</li>
+<li><strong>Zset</strong>：有序集合，不重复元素，按分数排序，用于排行榜、用户点赞等。</li>
+</ul>
+<h3 id="2-2-特殊类型"><a href="#2-2-特殊类型" class="headerlink" title="2.2 特殊类型"></a>2.2 特殊类型</h3><ul>
+<li><strong>Geo</strong>：地理位置信息存储。</li>
+<li><strong>HyperLogLog</strong>：基数统计，如网站UV统计。</li>
+<li><strong>Bitmaps</strong>：位图操作，以比特位为单位映射元素状态。</li>
+</ul>
+<h2 id="3-缓存问题"><a href="#3-缓存问题" class="headerlink" title="3. 缓存问题"></a>3. 缓存问题</h2><h3 id="3-1-缓存穿透"><a href="#3-1-缓存穿透" class="headerlink" title="3.1 缓存穿透"></a>3.1 缓存穿透</h3><ul>
+<li><strong>定义</strong>：查询一个不存在的数据，每次查询都穿透到数据库。</li>
+<li><strong>解决方案</strong>：参数校验、缓存空值&#x2F;默认值、使用布隆过滤器。</li>
+</ul>
+<h3 id="3-2-缓存雪崩"><a href="#3-2-缓存雪崩" class="headerlink" title="3.2 缓存雪崩"></a>3.2 缓存雪崩</h3><ul>
+<li><strong>定义</strong>：大量缓存数据同时过期，导致数据库压力过大。</li>
+<li><strong>解决方案</strong>：均匀设置过期时间、构造高可用集群。</li>
+</ul>
+<h3 id="3-3-缓存击穿"><a href="#3-3-缓存击穿" class="headerlink" title="3.3 缓存击穿"></a>3.3 缓存击穿</h3><ul>
+<li><strong>定义</strong>：热点key过期时，大量并发请求直接打到数据库。</li>
+<li><strong>解决方案</strong>：互斥锁方案、永不过期策略。</li>
+</ul>
+<h2 id="4-热Key问题"><a href="#4-热Key问题" class="headerlink" title="4. 热Key问题"></a>4. 热Key问题</h2><ul>
+<li><strong>定义</strong>：访问频率极高的key。</li>
+<li><strong>解决方案</strong>：Redis集群扩容、分散热key、使用二级缓存。</li>
+</ul>
+<h2 id="5-过期与内存淘汰策略"><a href="#5-过期与内存淘汰策略" class="headerlink" title="5. 过期与内存淘汰策略"></a>5. 过期与内存淘汰策略</h2><h3 id="5-1-过期策略"><a href="#5-1-过期策略" class="headerlink" title="5.1 过期策略"></a>5.1 过期策略</h3><ul>
+<li><strong>定时过期</strong>：每个key设置定时器，到时间清除，占用CPU高。</li>
+<li><strong>惰性过期</strong>：访问时判断是否过期，内存不友好。</li>
+<li><strong>定期过期</strong>：定时扫描并清除过期key，平衡CPU和内存资源。</li>
+</ul>
+<h3 id="5-2-内存淘汰策略"><a href="#5-2-内存淘汰策略" class="headerlink" title="5.2 内存淘汰策略"></a>5.2 内存淘汰策略</h3><ul>
+<li><strong>volatile-lru</strong>：从过期key中使用LRU算法淘汰。</li>
+<li><strong>allkeys-lru</strong>：从所有key中使用LRU算法淘汰。</li>
+<li><strong>volatile-lfu</strong>、<strong>allkeys-lfu</strong>：4.0版本新增，使用LFU算法淘汰。</li>
+<li><strong>volatile-random</strong>、<strong>allkeys-random</strong>：随机淘汰。</li>
+<li><strong>volatile-ttl</strong>：根据过期时间淘汰。</li>
+<li><strong>noeviction</strong>：默认策略，内存不足时新写入操作报错。</li>
+</ul>
+<h2 id="6-应用场景"><a href="#6-应用场景" class="headerlink" title="6. 应用场景"></a>6. 应用场景</h2><ul>
+<li><strong>缓存</strong>：提升访问速度，降低数据库压力。</li>
+<li><strong>排行榜</strong>：使用zset实现。</li>
+<li><strong>计数器</strong>：支持实时计数。</li>
+<li><strong>共享Session</strong>：集中管理用户Session。</li>
+<li><strong>分布式锁</strong>：实现分布式环境下的锁机制。</li>
+<li><strong>社交网络</strong>：实现点赞、粉丝等功能。</li>
+<li><strong>消息队列</strong>：简单的发布&#x2F;订阅及阻塞队列。</li>
+<li><strong>位操作</strong>：用于签到、去重等场景。</li>
+</ul>
+<h2 id="7-持久化机制"><a href="#7-持久化机制" class="headerlink" title="7. 持久化机制"></a>7. 持久化机制</h2><h3 id="7-1-RDB"><a href="#7-1-RDB" class="headerlink" title="7.1 RDB"></a>7.1 RDB</h3><ul>
+<li><strong>定义</strong>：内存数据快照保存到磁盘，适合大规模数据恢复。</li>
+<li><strong>缺点</strong>：无法实现实时持久化。</li>
+</ul>
+<h3 id="7-2-AOF"><a href="#7-2-AOF" class="headerlink" title="7.2 AOF"></a>7.2 AOF</h3><ul>
+<li><strong>定义</strong>：记录每个写操作到日志文件中，重启时重放命令恢复数据。</li>
+<li><strong>优点</strong>：解决数据持久化实时性问题。</li>
+<li><strong>缺点</strong>：AOF文件可能变大，影响恢复速度。</li>
+</ul>
+<h2 id="8-高可用解决方案"><a href="#8-高可用解决方案" class="headerlink" title="8. 高可用解决方案"></a>8. 高可用解决方案</h2><h3 id="8-1-主从模式"><a href="#8-1-主从模式" class="headerlink" title="8.1 主从模式"></a>8.1 主从模式</h3><ul>
+<li><strong>定义</strong>：部署多台Redis服务器，主节点负责读写，从节点负责读，通过主从复制保持数据一致。</li>
+</ul>
+<h3 id="8-2-哨兵模式"><a href="#8-2-哨兵模式" class="headerlink" title="8.2 哨兵模式"></a>8.2 哨兵模式</h3><ul>
+<li><strong>定义</strong>：监控Redis主从节点，主节点故障时自动将从节点切换为主节点，并通知其他节点和客户端。</li>
+</ul>
+<h3 id="8-3-Cluster集群模式"><a href="#8-3-Cluster集群模式" class="headerlink" title="8.3 Cluster集群模式"></a>8.3 Cluster集群模式</h3><ul>
+<li><strong>定义</strong>：实现分布式存储，通过Hash Slot插槽算法将数据分布到不同节点，解决在线扩容问题，提供复制和故障转移功能。</li>
+</ul>
+<h2 id="9-分布式锁实现"><a href="#9-分布式锁实现" class="headerlink" title="9. 分布式锁实现"></a>9. 分布式锁实现</h2><h3 id="9-1-常见实现方法"><a href="#9-1-常见实现方法" class="headerlink" title="9.1 常见实现方法"></a>9.1 常见实现方法</h3><ul>
+<li><strong>setnx + expire分开写</strong>：存在锁无法释放问题。</li>
+<li><strong>setnx + value值是过期时间</strong>：时间同步、锁被误释放问题。</li>
+<li><strong>set的扩展命令（set ex px nx）</strong>：锁过期但业务未执行完问题。</li>
+<li><strong>set ex px nx + 校验唯一随机值,再删除</strong>：使用Lua脚本保证原子性。</li>
+</ul>
+<h3 id="9-2-Redisson原理"><a href="#9-2-Redisson原理" class="headerlink" title="9.2 Redisson原理"></a>9.2 Redisson原理</h3><ul>
+<li><strong>看门狗机制</strong>：定期延长锁生存时间，解决锁过期释放但业务未执行完问题。</li>
+</ul>
+<h3 id="9-3-Redlock算法"><a href="#9-3-Redlock算法" class="headerlink" title="9.3 Redlock算法"></a>9.3 Redlock算法</h3><ul>
+<li><strong>多节点获取锁</strong>：保证分布式环境下锁的安全性。</li>
+</ul>
+<h2 id="10-redis项目中应用"><a href="#10-redis项目中应用" class="headerlink" title="10.redis项目中应用"></a>10.redis项目中应用</h2><h3 id="10-1商城项目"><a href="#10-1商城项目" class="headerlink" title="10.1商城项目"></a>10.1商城项目</h3><h4 id="缓存商品信息"><a href="#缓存商品信息" class="headerlink" title="缓存商品信息"></a>缓存商品信息</h4><ul>
+<li><strong>应用场景</strong>：谷粒商城中的商品信息（如商品详情、价格、库存等）访问频繁，且更新频率相对较低。</li>
+<li><strong>实现方式</strong>：使用Redis缓存商品数据，当用户访问商品详情页时，首先从Redis中查询，如果缓存中存在则直接返回，否则从数据库中查询并更新Redis缓存。</li>
+<li><strong>产生问题</strong>：可能会造成缓存击穿的问题，通过加分布式锁来解决问题。</li>
+<li><strong>优势</strong>：显著提升页面加载速度，减轻数据库压力。</li>
+</ul>
+<h4 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h4><ul>
+<li><p><strong>使用目的</strong>：分布式项目时，但本地锁只能锁住当前服务，需要分布式锁</p>
+</li>
+<li><p><strong>应用场景</strong>：在库存扣减、优惠券领取等并发场景中使用分布式锁保证数据一致性。</p>
+</li>
+<li><p><strong>实现方式</strong>：使用Redis的SETNX命令或Redisson客户端实现分布式锁，确保在同一时间内只有一个请求能扣减库存或领取优惠券。</p>
+<p><img src="/Redis%5Csetnx.png" alt="setnx"></p>
+</li>
+<li><p><strong>产生的问题</strong>：</p>
+</li>
+<li><p><img src="/Redis%5Csetnx_error.png" alt="描述"></p>
+<p><strong>死锁</strong>：1.setnx占位，业务异常或者程序在页面过程宕机。没有执行锁的删除逻辑，造成死锁。采用设置过期时间解决。2.setnx设置好，只要设置过期时间，宕机又会造成死锁。解决：设置过期时间和占位必须是原子性的，redis提供了setnxex()命令。</p>
+<p><strong>误删锁</strong>：setnxex(“lock”,111,10s),由于业务时间很长，锁自己过期了，我们直接删除，可能造成把别人正在持有的锁删除了（10s后当前锁自动过期，但业务还未结束，下一个请求占锁，在执行，当前业务结束，又将锁删除）。解决：占锁的时候加uuid，每个匹配到自己的锁再删除。</p>
+<p><strong>拿锁比锁删锁的原子性</strong>：拿锁获取uuid，比锁，但是在这过程中锁过期了，当我们执行删锁会造成删除新的别人的锁。</p>
+</li>
+<li><p><strong>优势</strong>：有效防止超卖现象，保证数据准确性和系统稳定性。</p>
+</li>
+</ul>
+<h3 id="10-2博客系统"><a href="#10-2博客系统" class="headerlink" title="10.2博客系统"></a>10.2博客系统</h3><h4 id="缓存文章浏览量与评论数据"><a href="#缓存文章浏览量与评论数据" class="headerlink" title="缓存文章浏览量与评论数据"></a>缓存文章浏览量与评论数据</h4><ul>
+<li><strong>应用场景</strong>：博客文章及其评论数据访问频繁，尤其是热门文章。</li>
+<li><strong>实现方式</strong>：将文章和评论数据缓存到Redis中，用户访问时首先从缓存中获取，缓存未命中则查询数据库并更新缓存。</li>
+<li><strong>优势</strong>：减少数据库查询压力，提高页面加载速度。</li>
+</ul>
+<h4 id="用户会话管理"><a href="#用户会话管理" class="headerlink" title="用户会话管理"></a>用户会话管理</h4><ul>
+<li><strong>应用场景</strong>：用户登录状态、个人信息等会话信息的集中管理。</li>
+<li><strong>实现方式</strong>：使用Redis的Hash类型存储用户会话信息，每个用户的会话作为一个Hash表，会话中的各项信息作为Hash表的字段。</li>
+<li><strong>优势</strong>：支持分布式环境下的用户会话共享，避免用户在不同服务器间切换时需要重新登录。</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>LiuXue</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://lx-coding.github.io/2023/10/06/Redis/">https://lx-coding.github.io/2023/10/06/Redis/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Redis/"># Redis</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2023/06/06/Spring-Cloud-Alibaba/">深入理解Spring Cloud与Spring Cloud Alibaba在微服务架构中的应用</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© LiuXue | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
