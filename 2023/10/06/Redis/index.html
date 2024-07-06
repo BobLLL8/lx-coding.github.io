@@ -327,11 +327,11 @@
 <li><p><strong>应用场景</strong>：在库存扣减、优惠券领取等并发场景中使用分布式锁保证数据一致性。</p>
 </li>
 <li><p><strong>实现方式</strong>：使用Redis的SETNX命令或Redisson客户端实现分布式锁，确保在同一时间内只有一个请求能扣减库存或领取优惠券。</p>
-<p><img src="/Redis%5Csetnx.png" alt="setnx"></p>
+<p><img src="/.%5CRedis%5Csetnx.png" alt="setnx"></p>
 </li>
 <li><p><strong>产生的问题</strong>：</p>
 </li>
-<li><p><img src="/Redis%5Csetnx_error.png" alt="描述"></p>
+<li><p><img src="/.%5CRedis%5Csetnx_error.png" alt="描述"></p>
 <p><strong>死锁</strong>：1.setnx占位，业务异常或者程序在页面过程宕机。没有执行锁的删除逻辑，造成死锁。采用设置过期时间解决。2.setnx设置好，只要设置过期时间，宕机又会造成死锁。解决：设置过期时间和占位必须是原子性的，redis提供了setnxex()命令。</p>
 <p><strong>误删锁</strong>：setnxex(“lock”,111,10s),由于业务时间很长，锁自己过期了，我们直接删除，可能造成把别人正在持有的锁删除了（10s后当前锁自动过期，但业务还未结束，下一个请求占锁，在执行，当前业务结束，又将锁删除）。解决：占锁的时候加uuid，每个匹配到自己的锁再删除。</p>
 <p><strong>拿锁比锁删锁的原子性</strong>：拿锁获取uuid，比锁，但是在这过程中锁过期了，当我们执行删锁会造成删除新的别人的锁。</p>
